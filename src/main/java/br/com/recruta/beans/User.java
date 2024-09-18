@@ -10,8 +10,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="TB_USER")
 public class User {
-	
-	// Define se o usuario é um candidato ou recrutador
 	@Column(name = "role", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'user")
 	private String role;
 
@@ -78,26 +76,4 @@ public class User {
 	public String getFoto() {
 		return foto;
 	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
 }
-
-
-
-
-// nome
-// email
-// telefone
-// foto
-
-
-// sexo
-// cidade
-// estado
-// endereco
-// link para rede social
-// corpo do curriculo 
-// formacao academica 
