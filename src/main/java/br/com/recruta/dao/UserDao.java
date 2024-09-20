@@ -9,9 +9,9 @@ import br.com.recruta.beans.User;
 
 public interface UserDao extends CrudRepository<User, Integer>{
 	
-	public User findByEmailAndSenha(String email, String senha);
+	public User findByEmailAndPassword(String email, String password);
 	
-	public List<User> findByNomeLike(String nome);
+	public List<User> findByNameLike(String name);
 
 }
 

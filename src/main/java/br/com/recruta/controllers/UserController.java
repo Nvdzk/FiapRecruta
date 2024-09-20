@@ -25,7 +25,7 @@ public class UserController {
     @Autowired
     private UserDao dao;
 
-    @GetMapping("/user")
+    @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
 
         List<User> result = (List<User>) dao.findAll();
@@ -42,10 +42,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/{code}")
-	public ResponseEntity<User> findUser(@PathVariable int code) {
+    @GetMapping("/{id}")
+	public ResponseEntity<User> getUser(@PathVariable int id) {
 		
-		User result = dao.findById(code).orElse(null);
+		User result = dao.findById(id).orElse(null);
 		
 		if(result == null) {
 			
@@ -76,9 +76,9 @@ public class UserController {
     @PostMapping("/login")
 	public ResponseEntity<User> login(@RequestBody User user) {
 		String email = user.getEmail();
-		String senha = user.getSenha();
+		String password = user.getPassword();
 		
-		User result = dao.findByEmailAndSenha(email, senha);
+		User result = dao.findByEmailAndPassword(email, password);
 				
 				if(result == null) {
 					
@@ -92,21 +92,29 @@ public class UserController {
 				
 	}
 
-    // Criar um Put ou atualizar pelo Post???
     @PutMapping("/{id}")
-    private void updateUser() {
-
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
+        User existingUser = dao.findById(id).orElse(null);
+        if (existingUser == null) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        
+        dao.save(existingUser);
+        return ResponseEntity.ok(existingUser);
     }
+    
 
-    @DeleteMapping("/user/{code}")
-    public ResponseEntity<User> deleteUser(@PathVariable int code) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable int id) {
         try {
-            User result = dao.findById(code).orElse(null);
+            User result = dao.findById(id).orElse(null);
 
             if (result == null) {
                 return ResponseEntity.status(404).build();
             }
-
             dao.delete(result);
 
             return ResponseEntity.ok(result);

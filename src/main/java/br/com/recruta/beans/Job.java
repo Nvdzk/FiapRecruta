@@ -1,95 +1,130 @@
-// package br.com.recruta.beans;
+package br.com.recruta.beans;
 
-// import jakarta.persistence.Column;
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.util.Date;
 
-// @Entity
-// @Table(name="TB_JOB")
-// public class Job {
+@Entity
+@Table(name="TB_JOB")
+public class Job {
 
-// 	@Column(name="id")
-// 	@Id
-// 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-// 	private int id;
+	@Column(name="id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	
-// 	@Column(name="nome", length = 50)
-// 	private String nome;
+	@Column(name="name", length = 50)
+	private String name;
 	
-// 	@Column(name="empresa", length = 100)
-// 	private String empresa;
+	@Column(name="job_description", length = 100)
+	private String jobDescription;
+
+	@Column(name="company", length = 100)
+	private String company;
 	
-// 	@Column(name="cargo", length = 100)
-// 	private String cargo;
+	@Column(name="company_description", length = 100)
+	private String companyDescription;
 
-// 	@Column(name="formacao", length = 100)
-// 	private String formacao;
+	@Column(name="position", length = 50)
+	private String position;
+
+	@Column(name="education", length = 200)
+	private String education;
+
+	@Column(name="create_date")
+	private Date createDate;
+
+	@Column(name="expire_date")
+	private Date expireDate;
+
+	@Column(name="status", length = 20)
+	private String status;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getJobDescription() {
+        return jobDescription;
+    }
+
+    public void setJobDescription(String jobDescription) {
+        this.jobDescription = jobDescription;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getCompanyDescription() {
+        return companyDescription;
+    }
+
+    public void setCompanyDescription(String companyDescription) {
+        this.companyDescription = companyDescription;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 	
-// 	@Column(name="descricaoVaga", length = 100)
-// 	private String descricaoVaga;
+    
 
-// 	@Column(name="descricaoEmpresa", length = 100)
-// 	private String descricaoEmpresa;
 
-// 	public int getId() {
-// 		return id;
-// 	}
-
-// 	public void setId(int id) {
-// 		this.id = id;
-// 	}
-
-// 	public String getNome() {
-// 		return nome;
-// 	}
-
-// 	public void setNome(String nome) {
-// 		this.nome = nome;
-// 	}
-
-// 	public String getEmpresa() {
-// 		return empresa;
-// 	}
-
-// 	public void setEmpresa(String empresa) {
-// 		this.empresa = empresa;
-// 	}
-
-// 	public String getCargo() {
-// 		return cargo;
-// 	}
-
-// 	public void setCargo(String cargo) {
-// 		this.cargo = cargo;
-// 	}
-
-// 	public String getFormacao() {
-// 		return formacao;
-// 	}
-
-// 	public void setFormacao(String formacao) {
-// 		this.formacao = formacao;
-// 	}
-
-// 	public String getDescricaoVaga() {
-// 		return descricaoVaga;
-// 	}
-
-// 	public void setDescricaoVaga(String descricaoVaga) {
-// 		this.descricaoVaga = descricaoVaga;
-// 	}
-
-// 	public String getDescricaoEmpresa() {
-// 		return descricaoEmpresa;
-// 	}
-
-// 	public void setDescricaoEmpresa(String descricaoEmpresa) {
-// 		this.descricaoEmpresa = descricaoEmpresa;
-// 	}
-	
-	
-
-// }
+}

@@ -11,28 +11,52 @@ import jakarta.persistence.Table;
 @Table(name="TB_USER")
 public class User {
 	
-	// @Column(name = "role", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'user")
-	// private String role;
-
 	@Column(name="id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="nome", length = 50)
-	private String nome;
+	@Column(name="name", length = 100)
+	private String name;
 	
-	@Column(name="email", length = 70)
+	@Column(name="email", length = 100)
 	private String email;
 	
-	@Column(name="telefone", length = 13)
-	private String telefone;
+	@Column(name="phone", length = 15)
+	private String phone;
 
-	@Column(name="senha", length = 12)
-	private String senha;
+	@Column(name="password", length = 20)
+	private String password;
 	
-	@Column(name="foto", length = 100)
-	private String foto;
+	@Column(name="picture", length = 100)
+	private String picture;
+
+	@Column(name="city", length = 50)
+	private String city;
+
+	@Column(name="district", length = 50)
+	private String district;
+
+	@Column(name="uf", length = 2)
+	private String uf;
+
+	@Column(name="gender", length = 50)
+	private String gender;
+
+	@Column(name="socialLink", length = 200)
+	private String socialLink;
+
+	@Column(name="education", length = 200)
+	private String education;
+
+	@Column(name="goals", length = 200)
+	private String professionalGoals;
+
+	@Column(name="habilities", length = 200)
+	private String tecnicalHabilities;
+
+	@Column(name="experiences", length = 200)
+	private String professionalExperiences;
 
 	public int getId() {
 		return id;
@@ -42,12 +66,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -58,23 +82,100 @@ public class User {
 		this.email = email;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getFoto() {
-		return foto;
+	public String getPicture() {
+		return picture;
 	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getSocialLink() {
+		return socialLink;
+	}
+
+	public void setSocialLink(String socialLink) {
+		this.socialLink = socialLink;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getProfessionalGoals() {
+		return professionalGoals;
+	}
+
+	public void setProfessionalGoals(String professionalGoals) {
+		this.professionalGoals = professionalGoals;
+	}
+
+	public String getTecnicalHabilities() {
+		return tecnicalHabilities;
+	}
+
+	public void setTecnicalHabilities(String tecnicalHabilities) {
+		this.tecnicalHabilities = tecnicalHabilities;
+	}
+
+	public String getProfessionalExperiences() {
+		return professionalExperiences;
+	}
+
+	public void setProfessionalExperiences(String professionalExperiences) {
+		this.professionalExperiences = professionalExperiences;
+	}
+
 }
