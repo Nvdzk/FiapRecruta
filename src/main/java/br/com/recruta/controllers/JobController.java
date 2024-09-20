@@ -1,72 +1,84 @@
-package br.com.recruta.controllers;
+// package br.com.recruta.controllers;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.CrossOrigin;
+// import org.springframework.web.bind.annotation.DeleteMapping;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RestController;
 
-import br.com.recruta.beans.User;
+// import br.com.recruta.beans.Job;
+// import br.com.recruta.dao.JobDao;
 
-public class JobController {
+// @RestController
+// @CrossOrigin("*")
+// @RequestMapping("job")
+// public class JobController {
 
-    @GetMapping("/usuario")
-    public ResponseEntity<List<User>> getAllUsers() {
+//     @Autowired
+//     private JobDao dao;
 
-        List<User> resultado = (List<User>) dao.findAll();
+//     @GetMapping("/job")
+//     public ResponseEntity<List<Job>> getAllJobs() {
 
-        if (resultado.size() == 0) {
-            return ResponseEntity.status(404).build();
+//         List<Job> result = (List<Job>) dao.findAll();
 
-        }
+//         if (result.size() == 0) {
+//             return ResponseEntity.status(404).build();
 
-        else {
+//         }
 
-            return ResponseEntity.ok(resultado);
+//         else {
 
-        }
-    }
+//             return ResponseEntity.ok(result);
 
-    @PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody User usuario) {
-		String email = user.getEmail();
-		String senha = user.getSenha();
+//         }
+//     }
+    
+// /* 
+//     //O que o metodo Post deve fazer na vaga de emprego?
+//     @PostMapping("/login") //login???
+// 	public ResponseEntity<Job> login(@RequestBody Job job) {
+// 		String email = job.getEmail(); //Ele esta buscando algo, o que exatamente???  Email / Senha???
+// 		String senha = job.getSenha();
 		
-		User resultado = userdao.findByEmailAndSenha(email, senha);
+// 		Job result = dao.findByEmailAndSenha(email, senha);
 				
-				if(resultado == null) {
+// 				if(result == null) {
 					
-					return ResponseEntity.status(404).build();
-				}
+// 					return ResponseEntity.status(404).build();
+// 				}
 				
-				else {
+// 				else {
 					
-					return ResponseEntity.ok(resultado);
-				}
-    }
+// 					return ResponseEntity.ok(result);
+// 				}
+				
+// 	}
+// */
 
+//     @DeleteMapping("/job/{code}")
+//     public ResponseEntity<Job> deleteJob(@PathVariable int code) {
+//         try {
+//             Job result = dao.findById(code).orElse(null);
 
-    @DeleteMapping("/user/{code}")
-    public ResponseEntity<User> deleteUser(@PathVariable int code) {
-        try {
-            User result = dao.findById(code).orElse(null);
+//             if (result == null) {
+//                 return ResponseEntity.status(404).build();
+//             }
 
-            if (result == null) {
-                return ResponseEntity.status(404).build();
-            }
+//             dao.delete(result);
 
-            dao.delete(result);
+//             return ResponseEntity.ok(result);
 
-            return ResponseEntity.ok(result);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).build();
-        }
-    }
-
-
-}
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//             return ResponseEntity.status(500).build();
+//         }
+//     }
+// }

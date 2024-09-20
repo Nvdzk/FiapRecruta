@@ -1,6 +1,5 @@
 package br.com.recruta.controllers;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,77 +18,86 @@ import br.com.recruta.beans.User;
 import br.com.recruta.dao.UserDao;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("user")
-public class UsersController {
+public class UserController {
 
     @Autowired
     private UserDao dao;
 
-    // @GetMapping
-    // private void getAllUsers(){
-
-    // }
-    @GetMapping("/usuario")
+    @GetMapping("/user")
     public ResponseEntity<List<User>> getAllUsers() {
 
-        List<User> resultado = (List<User>) dao.findAll();
+        List<User> result = (List<User>) dao.findAll();
 
-        if (resultado.size() == 0) {
+        if (result.size() == 0) {
             return ResponseEntity.status(404).build();
 
         }
 
         else {
 
-            return ResponseEntity.ok(resultado);
+            return ResponseEntity.ok(result);
 
         }
     }
 
-    @PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody User usuario) {
-		String email = user.getEmail();
-		String senha = user.getSenha();
+    @GetMapping("/user/{code}")
+	public ResponseEntity<User> findUser(@PathVariable int code) {
 		
-		User resultado = userdao.findByEmailAndSenha(email, senha);
-				
-				if(resultado == null) {
-					
-					return ResponseEntity.status(404).build();
-				}
-				
-				else {
-					
-					return ResponseEntity.ok(resultado);
-				}
-    }
-    // @PostMapping("/register")
-    // private void createUser(){
-
-    // }
-
+		User result = dao.findById(code).orElse(null);
+		
+		if(result == null) {
+			
+			return ResponseEntity.status(404).build();
+		}
+		
+		else {
+			
+			return ResponseEntity.ok(result);
+		}
+		
+	}
+    
     @PostMapping("/register")
-    public ResponseEntity<User> salvarUsuario(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
 
         try {
             dao.save(user);
             return ResponseEntity.ok(user);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
 
         }
     }
 
+    @PostMapping("/login")
+	public ResponseEntity<User> login(@RequestBody User user) {
+		String email = user.getEmail();
+		String senha = user.getSenha();
+		
+		User result = dao.findByEmailAndSenha(email, senha);
+				
+				if(result == null) {
+					
+					return ResponseEntity.status(404).build();
+				}
+				
+				else {
+					
+					return ResponseEntity.ok(result);
+				}
+				
+	}
+
+    // Criar um Put ou atualizar pelo Post???
     @PutMapping("/{id}")
     private void updateUser() {
 
     }
 
-    // @DeleteMapping("/{id}")
-    // private void deleteUser(){
-
-    // }
     @DeleteMapping("/user/{code}")
     public ResponseEntity<User> deleteUser(@PathVariable int code) {
         try {
