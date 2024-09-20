@@ -1,83 +1,92 @@
-// package br.com.recruta.controllers;
+package br.com.recruta.controllers;
 
-// import java.util.List;
+import java.util.List;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.CrossOrigin;
-// import org.springframework.web.bind.annotation.DeleteMapping;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestBody;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// import br.com.recruta.beans.Company;
-// import br.com.recruta.dao.CompanyDao;
+import br.com.recruta.beans.Company;
+import br.com.recruta.dao.CompanyDao;
 
-// @RestController
-// @CrossOrigin("*")
-// @RequestMapping("company")
-// public class CompanyController {
+@RestController
+@CrossOrigin("*")
+@RequestMapping("company")
+public class CompanyController {
 
-//     @Autowired
-//     private CompanyDao dao;
+    @Autowired
+    private CompanyDao dao;
 
-//     @GetMapping("/company")
-//     public ResponseEntity<List<Company>> getAllCompany() {
+    @GetMapping
+    public ResponseEntity<List<Company>> getAllCompanies() {
+        List<Company> result = (List<Company>) dao.findAll();
+        if (result.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        return ResponseEntity.ok(result);
+    }
 
-//         List<Company> result = (List<Company>) dao.findAll();
+    @GetMapping("/{id}")
+    public ResponseEntity<Company> getCompanyById(@PathVariable int id) {
+        Company result = dao.findById(id).orElse(null);
+        if (result == null) {
+            return ResponseEntity.status(404).build();
+        }
+        return ResponseEntity.ok(result);
+    }
 
-//         if (result.size() == 0) {
-//             return ResponseEntity.status(404).build();
+    @PostMapping("/create")
+    public ResponseEntity<Company> createCompany(@RequestBody Company company) {
 
-//         }
+        try {
+            dao.save(company);
+            return ResponseEntity.ok(company);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
 
-//         else {
+    @PutMapping("/{id}")
+    public ResponseEntity<Company> updateCompany(@PathVariable int id, @RequestBody Company company) {
+        Company existingCompany = dao.findById(id).orElse(null);
+        if (existingCompany == null) {
+            return ResponseEntity.status(404).build();
+        }
+    
+        existingCompany.setName(company.getName());
+        existingCompany.setDescription(company.getDescription());
+    
+        dao.save(existingCompany);
+        return ResponseEntity.ok(existingCompany);
+    }
+    
 
-//             return ResponseEntity.ok(result);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Company> deleteCompany(@PathVariable int id) {
+        try {
+            Company result = dao.findById(id).orElse(null);
 
-//         }
-//     }
+            if (result == null) {
+                return ResponseEntity.status(404).build();
+            }
+            dao.delete(result);
 
-// /* 
-//     //O que o metodo Post deve fazer na empresa?
-//     @PostMapping("/login") //login???
-// 	public ResponseEntity<Company> login(@RequestBody Company company) {
-// 		String email = company.getEmail(); //Ele esta buscando algo, o que exatamente???  Email / Senha???
-// 		String senha = company.getSenha();
-		
-// 		Company result = dao.findByEmailAndSenha(email, senha);
-				
-// 				if(result == null) {
-					
-// 					return ResponseEntity.status(404).build();
-// 				}
-				
-// 				else {
-					
-// 					return ResponseEntity.ok(result);
-// 				}
-				
-// 	}
-// */
-//     @DeleteMapping("/company/{code}")
-//     public ResponseEntity<Company> deleteCompany(@PathVariable int code) {
-//         try {
-//             Company result = dao.findById(code).orElse(null);
+            return ResponseEntity.ok(result);
 
-//             if (result == null) {
-//                 return ResponseEntity.status(404).build();
-//             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
 
-//             dao.delete(result);
-
-//             return ResponseEntity.ok(result);
-
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//             return ResponseEntity.status(500).build();
-//         }
-//     }
-// }
+}
