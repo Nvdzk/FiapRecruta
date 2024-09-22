@@ -1,62 +1,75 @@
 package br.com.recruta.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="TB_USER")
+@Table(name = "TB_USER")
 public class User {
-	
-	@Column(name="id")
+
+	@Column(name = "id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="name", length = 100)
+
+	@Column(name = "name", length = 100)
 	private String name;
-	
-	@Column(name="email", length = 100)
+
+	@Column(name = "email", length = 100)
 	private String email;
-	
-	@Column(name="phone", length = 15)
+
+	@Column(name = "phone", length = 15)
 	private String phone;
 
-	@Column(name="password", length = 20)
+	@Column(name = "password", length = 20)
 	private String password;
-	
-	@Column(name="picture", length = 100)
+
+	@Column(name = "picture", length = 100)
 	private String picture;
 
-	@Column(name="city", length = 50)
+	@Column(name = "city", length = 50)
 	private String city;
 
-	@Column(name="district", length = 50)
+	@Column(name = "district", length = 50)
 	private String district;
 
-	@Column(name="uf", length = 2)
+	@Column(name = "uf", length = 2)
 	private String uf;
 
-	@Column(name="gender", length = 50)
+	@Column(name = "gender", length = 50)
 	private String gender;
 
-	@Column(name="socialLink", length = 200)
+	@Column(name = "socialLink", length = 200)
 	private String socialLink;
 
-	@Column(name="education", length = 200)
+	@Column(name = "education", length = 200)
 	private String education;
 
-	@Column(name="goals", length = 200)
+	@Column(name = "goals", length = 200)
 	private String professionalGoals;
 
-	@Column(name="habilities", length = 200)
+	@Column(name = "habilities", length = 200)
 	private String tecnicalHabilities;
 
-	@Column(name="experiences", length = 200)
+	@Column(name = "experiences", length = 200)
 	private String professionalExperiences;
+
+	@JsonIgnoreProperties("users")
+	@ManyToMany
+	@JoinTable(name = "job_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
+	private List<Job> jobs = new ArrayList<>();
 
 	public int getId() {
 		return id;
@@ -176,6 +189,14 @@ public class User {
 
 	public void setProfessionalExperiences(String professionalExperiences) {
 		this.professionalExperiences = professionalExperiences;
+	}
+
+	public List<Job> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
 	}
 
 }

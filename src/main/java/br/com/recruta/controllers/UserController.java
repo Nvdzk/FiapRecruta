@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.recruta.beans.User;
 import br.com.recruta.dao.UserDao;
+import br.com.recruta.dto.UserFilter;
 
 @RestController
 @CrossOrigin("*")
@@ -43,30 +44,29 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-	public ResponseEntity<User> getUser(@PathVariable int id) {
-		
-		User result = dao.findById(id).orElse(null);
-		
-		if(result == null) {
-			
-			return ResponseEntity.status(404).build();
-		}
-		
-		else {
-			
-			return ResponseEntity.ok(result);
-		}
-		
-	}
-    
+    public ResponseEntity<User> getUser(@PathVariable int id) {
+
+        User result = dao.findById(id).orElse(null);
+
+        if (result == null) {
+
+            return ResponseEntity.status(404).build();
+        }
+
+        else {
+
+            return ResponseEntity.ok(result);
+        }
+
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
 
         try {
             dao.save(user);
             return ResponseEntity.ok(user);
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
 
@@ -74,23 +74,23 @@ public class UserController {
     }
 
     @PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody User user) {
-		String email = user.getEmail();
-		String password = user.getPassword();
-		
-		User result = dao.findByEmailAndPassword(email, password);
-				
-				if(result == null) {
-					
-					return ResponseEntity.status(404).build();
-				}
-				
-				else {
-					
-					return ResponseEntity.ok(result);
-				}
-				
-	}
+    public ResponseEntity<User> login(@RequestBody User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
+
+        User result = dao.findByEmailAndPassword(email, password);
+
+        if (result == null) {
+
+            return ResponseEntity.status(404).build();
+        }
+
+        else {
+
+            return ResponseEntity.ok(result);
+        }
+
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
@@ -98,14 +98,25 @@ public class UserController {
         if (existingUser == null) {
             return ResponseEntity.status(404).build();
         }
-        
+
         existingUser.setName(user.getName());
         existingUser.setEmail(user.getEmail());
-        
+        existingUser.setPhone(user.getPhone());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setPicture(user.getPicture());
+        existingUser.setCity(user.getCity());
+        existingUser.setDistrict(user.getDistrict());
+        existingUser.setUf(user.getUf());
+        existingUser.setGender(user.getGender());
+        existingUser.setSocialLink(user.getSocialLink());
+        existingUser.setEducation(user.getEducation());
+        existingUser.setProfessionalGoals(user.getProfessionalGoals());
+        existingUser.setTecnicalHabilities(user.getTecnicalHabilities());
+        existingUser.setProfessionalExperiences(user.getProfessionalExperiences());
+
         dao.save(existingUser);
         return ResponseEntity.ok(existingUser);
     }
-    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable int id) {
@@ -123,6 +134,18 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<List<User>> filter(@RequestBody UserFilter filter) {
+
+        List<User> coll = dao.findByNameStartingWith(filter.getName());
+
+        if (coll.size() == 0) {
+            return ResponseEntity.status(404).build();
+        }
+
+        return ResponseEntity.ok(coll);
     }
 
 }

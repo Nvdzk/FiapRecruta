@@ -8,5 +8,6 @@ import br.com.recruta.beans.Company;
 
 public interface CompanyDao extends CrudRepository<Company, Integer> {
 
-    public List<Company> findByNameLike(String name);
+    public List<Company> findByNameStartingWith(String name);
+
 }

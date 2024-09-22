@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.recruta.beans.Company;
 import br.com.recruta.dao.CompanyDao;
+import br.com.recruta.dto.CompanyFilter;
 
 @RestController
 @CrossOrigin("*")
@@ -43,14 +44,13 @@ public class CompanyController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Company> createCompany(@RequestBody Company company) {
+    @PostMapping("/register")
+    public ResponseEntity<Company> registerCompany(@RequestBody Company company) {
 
         try {
             dao.save(company);
             return ResponseEntity.ok(company);
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
@@ -62,14 +62,13 @@ public class CompanyController {
         if (existingCompany == null) {
             return ResponseEntity.status(404).build();
         }
-    
+
         existingCompany.setName(company.getName());
         existingCompany.setDescription(company.getDescription());
-    
+
         dao.save(existingCompany);
         return ResponseEntity.ok(existingCompany);
     }
-    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Company> deleteCompany(@PathVariable int id) {
@@ -87,6 +86,18 @@ public class CompanyController {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<List<Company>> filter(@RequestBody CompanyFilter filter) {
+
+        List<Company> coll = dao.findByNameStartingWith(filter.getName());
+
+        if (coll.size() == 0) {
+            return ResponseEntity.status(404).build();
+        }
+
+        return ResponseEntity.ok(coll);
     }
 
 }
